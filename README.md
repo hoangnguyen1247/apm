@@ -9,19 +9,19 @@
 # APM - Aguia Process Manager
 APM is a lightweight process manager written in Golang for Golang applications. It helps you keep your applications alive forever, reload and start them from the source code.
 
-[![ReportCard](http://goreportcard.com/badge/topfreegames/apm)](http://goreportcard.com/badge/topfreegames/apm)
-[![GoDoc](https://godoc.org/github.com/topfreegames/apm?status.svg)](https://godoc.org/github.com/topfreegames/apm)
+[![ReportCard](http://goreportcard.com/badge/hoangnguyen1247/apm)](http://goreportcard.com/badge/hoangnguyen1247/apm)
+[![GoDoc](https://godoc.org/github.com/hoangnguyen1247/apm?status.svg)](https://godoc.org/github.com/hoangnguyen1247/apm)
 
 Starting an application is easy:
 ```bash
-$ ./apm bin app-name --source="github.com/topfreegames/apm"
+$ ./apm bin app-name --source="github.com/hoangnguyen1247/apm"
 ```
 
 This will basically compile your project source code and start it as a
 daemon in the background. The application will have already be
 downloaded into `GOPATH` issuing something like
 
-	go get github.com/topfreegames/apm
+	go get github.com/hoangnguyen1247/apm
 
 You will probably be able to run anything in any directory, as long as
 it is under `GOPATH`
@@ -29,7 +29,7 @@ it is under `GOPATH`
 ## Install APM
 
 ```bash
-$ go get github.com/topfreegames/apm
+$ go get github.com/hoangnguyen1247/apm
 ```
 
 ## Start APM
@@ -67,7 +67,7 @@ $ apm delete app-name
 $ apm serve --config-file="config/file/path.toml"
 $ apm serve-stop --config-file="config/file/path.toml"
 
-$ apm bin app-name --source="github.com/topfreegames/apm"   # Compile, start, daemonize and auto restart application.
+$ apm bin app-name --source="github.com/hoangnguyen1247/apm"   # Compile, start, daemonize and auto restart application.
 $ apm start app-name                                        # Start, daemonize and auto restart application.
 $ apm restart app-name                                      # Restart a previously saved process
 $ apm stop app-name                                         # Stop application.

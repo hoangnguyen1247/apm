@@ -1,9 +1,11 @@
 package preparable
 
-import "os/exec"
-import "strings"
+import (
+	"os/exec"
+	"strings"
 
-import "github.com/topfreegames/apm/lib/process"
+	"github.com/hoangnguyen1247/apm/lib/process"
+)
 
 type ProcPreparable interface {
 	PrepareBin() ([]byte, error)
@@ -15,6 +17,7 @@ type ProcPreparable interface {
 	getOutPath() string
 	getErrPath() string
 }
+
 // ProcPreparable is a preparable with all the necessary informations to run
 // a process. To actually run a process, call the Start() method.
 type Preparable struct {
@@ -69,7 +72,7 @@ func (preparable *Preparable) Start() (process.ProcContainer, error) {
 }
 
 func (preparable *Preparable) Identifier() string {
-	return preparable.Name;
+	return preparable.Name
 }
 
 func (preparable *Preparable) getPath() string {

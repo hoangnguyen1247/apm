@@ -1,11 +1,13 @@
 package process
 
-import "os"
-import "syscall"
-import "errors"
-import "strconv"
+import (
+	"errors"
+	"os"
+	"strconv"
+	"syscall"
 
-import "github.com/topfreegames/apm/lib/utils"
+	"github.com/hoangnguyen1247/apm/lib/utils"
+)
 
 type ProcContainer interface {
 	Start() error
@@ -157,7 +159,7 @@ func (proc *Proc) release() {
 
 // Notify that process was stopped so we can set its PID to -1
 func (proc *Proc) NotifyStopped() {
-	proc.Pid = -1;
+	proc.Pid = -1
 }
 
 // Add one restart to proc status
@@ -167,25 +169,25 @@ func (proc *Proc) AddRestart() {
 
 // Return proc current PID
 func (proc *Proc) GetPid() int {
-	return proc.Pid;
+	return proc.Pid
 }
 
 // Return proc current status
 func (proc *Proc) GetStatus() *ProcStatus {
-	return proc.Status;
+	return proc.Status
 }
 
 // Set proc status
 func (proc *Proc) SetStatus(status string) {
-	proc.Status.SetStatus(status);
+	proc.Status.SetStatus(status)
 }
 
 // Proc identifier that will be used by watcher to keep track of its processes
 func (proc *Proc) Identifier() string {
-	return proc.Name;
+	return proc.Name
 }
 
 // Returns true if the process should be kept alive or not
 func (proc *Proc) ShouldKeepAlive() bool {
-	return proc.KeepAlive;
+	return proc.KeepAlive
 }

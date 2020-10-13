@@ -18,20 +18,21 @@ It will start the remote client and return the instance so you can use to initia
 
 package master
 
-import "os"
-import "path"
-import "errors"
-import "fmt"
-import "sync"
+import (
+	"errors"
+	"fmt"
+	"os"
+	"path"
+	"sync"
+	"time"
 
-import "time"
+	"github.com/hoangnguyen1247/apm/lib/preparable"
+	"github.com/hoangnguyen1247/apm/lib/process"
+	"github.com/hoangnguyen1247/apm/lib/utils"
+	"github.com/hoangnguyen1247/apm/lib/watcher"
 
-import "github.com/topfreegames/apm/lib/preparable"
-import "github.com/topfreegames/apm/lib/process"
-import "github.com/topfreegames/apm/lib/utils"
-import "github.com/topfreegames/apm/lib/watcher"
-
-import log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
+)
 
 // Master is the main module that keeps everything in place and execute
 // the necessary actions to keep the process running as they should be.
@@ -52,9 +53,9 @@ type Master struct {
 // Procs map can't be decoded as long as we use the ProcContainer interface
 type DecodableMaster struct {
 	SysFolder string
-	PidFile string
-	OutFile string
-	ErrFile string
+	PidFile   string
+	OutFile   string
+	ErrFile   string
 
 	Watcher *watcher.Watcher
 
@@ -75,16 +76,16 @@ func InitMaster(configFile string) *Master {
 
 	procs := make(map[string]process.ProcContainer)
 	for k, v := range decodableMaster.Procs {
-		procs[k] = v;
+		procs[k] = v
 	}
 	// We need this hack because toml decoder doesn't decode to interfaces
-	master := &Master {
+	master := &Master{
 		SysFolder: decodableMaster.SysFolder,
-		PidFile: decodableMaster.PidFile,
-		OutFile: decodableMaster.OutFile,
-		ErrFile: decodableMaster.ErrFile,
-		Watcher: decodableMaster.Watcher,
-		Procs: procs,
+		PidFile:   decodableMaster.PidFile,
+		OutFile:   decodableMaster.OutFile,
+		ErrFile:   decodableMaster.ErrFile,
+		Watcher:   decodableMaster.Watcher,
+		Procs:     procs,
 	}
 
 	if master.SysFolder == "" {

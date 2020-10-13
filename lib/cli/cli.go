@@ -1,11 +1,13 @@
 package cli
 
-import "github.com/topfreegames/apm/lib/master"
+import (
+	"fmt"
+	"log"
+	"math"
+	"time"
 
-import "math"
-import "log"
-import "time"
-import "fmt"
+	"github.com/hoangnguyen1247/apm/lib/master"
+)
 
 // Cli is the command line client.
 type Cli struct {
@@ -41,6 +43,7 @@ func (cli *Cli) Resurrect() {
 		log.Fatalf("Failed to resurrect all previously save processes due to: %+v\n", err)
 	}
 }
+
 // StartGoBin will try to start a go binary process.
 // Returns a fatal error in case there's any.
 func (cli *Cli) StartGoBin(sourcePath string, name string, keepAlive bool, args []string) {
@@ -95,14 +98,14 @@ func (cli *Cli) Status() {
 		proc := procResponse.Procs[id]
 		maxName = int(math.Max(float64(maxName), float64(len(proc.Name))))
 	}
-	totalSize := maxName + 51;
+	totalSize := maxName + 51
 	topBar := ""
 	for i := 1; i <= totalSize; i += 1 {
 		topBar += "-"
 	}
 	infoBar := fmt.Sprintf("|%s|%s|%s|%s|",
 		PadString("pid", 13),
-		PadString("name", maxName + 2),
+		PadString("name", maxName+2),
 		PadString("status", 16),
 		PadString("keep-alive", 15))
 	fmt.Println(topBar)
@@ -115,7 +118,7 @@ func (cli *Cli) Status() {
 		}
 		fmt.Printf("|%s|%s|%s|%s|\n",
 			PadString(fmt.Sprintf("%d", proc.Pid), 13),
-			PadString(proc.Name, maxName + 2),
+			PadString(proc.Name, maxName+2),
 			PadString(proc.Status.Status, 16),
 			PadString(kp, 15))
 	}

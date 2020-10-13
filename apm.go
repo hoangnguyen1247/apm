@@ -23,20 +23,21 @@ It will start the remote client and return the instance so you can use to initia
 */
 package main
 
-import "github.com/kardianos/osext"
-import "gopkg.in/alecthomas/kingpin.v2"
-import "github.com/topfreegames/apm/lib/cli"
-import "github.com/topfreegames/apm/lib/master"
+import (
+	"os"
+	"os/signal"
+	"path"
+	"path/filepath"
+	"syscall"
 
-import "github.com/sevlyar/go-daemon"
+	"github.com/hoangnguyen1247/apm/lib/cli"
+	"github.com/hoangnguyen1247/apm/lib/master"
+	"github.com/kardianos/osext"
+	"github.com/sevlyar/go-daemon"
+	"gopkg.in/alecthomas/kingpin.v2"
 
-import "path"
-import "path/filepath"
-import "syscall"
-import "os"
-import "os/signal"
-
-import log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
+)
 
 var (
 	app     = kingpin.New("apm", "Aguia Process Manager.")
@@ -49,10 +50,10 @@ var (
 	serve           = app.Command("serve", "Create APM server instance.")
 	serveConfigFile = serve.Flag("config-file", "Config file location").String()
 
-	resurrect     = app.Command("resurrect", "Resurrect all previously save processes.")
+	resurrect = app.Command("resurrect", "Resurrect all previously save processes.")
 
 	bin           = app.Command("bin", "Create bin process.")
-	binSourcePath = bin.Flag("source", "Go project source path. (Ex: github.com/topfreegames/apm)").Required().String()
+	binSourcePath = bin.Flag("source", "Go project source path. (Ex: github.com/hoangnguyen1247/apm)").Required().String()
 	binName       = bin.Arg("name", "Process name.").Required().String()
 	binKeepAlive  = bin.Flag("keep-alive", "Keep process alive forever.").Required().Bool()
 	binArgs       = bin.Flag("args", "External args.").Strings()

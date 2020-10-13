@@ -1,12 +1,14 @@
 package master
 
-import "net"
-import "net/rpc"
-import "log"
-import "time"
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"net"
+	"net/rpc"
+	"time"
 
-import "github.com/topfreegames/apm/lib/process"
+	"github.com/hoangnguyen1247/apm/lib/process"
+)
 
 // RemoteMaster is a struct that holds the master instance.
 type RemoteMaster struct {
@@ -20,22 +22,23 @@ type RemoteClient struct {
 
 // GoBin is a struct that represents the necessary arguments for a go binary to be built.
 type GoBin struct {
-	SourcePath string   // SourcePath is the package path. (Ex: github.com/topfreegames/apm)
+	SourcePath string   // SourcePath is the package path. (Ex: github.com/hoangnguyen1247/apm)
 	Name       string   // Name is the process name that will be given to the process.
 	KeepAlive  bool     // KeepAlive will determine whether APM should keep the proc live or not.
 	Args       []string // Args is an array containing all the extra args that will be passed to the binary after compilation.
 }
 
 type ProcDataResponse struct {
-	Name string
-	Pid int
-	Status *process.ProcStatus
+	Name      string
+	Pid       int
+	Status    *process.ProcStatus
 	KeepAlive bool
 }
 
 type ProcResponse struct {
 	Procs []*ProcDataResponse
 }
+
 // Save will save the current running and stopped processes onto a file.
 // Returns an error in case there's any.
 func (remote_master *RemoteMaster) Save(req string, ack *bool) error {
@@ -93,15 +96,15 @@ func (remote_master *RemoteMaster) MonitStatus(req string, response *ProcRespons
 	procsResponse := []*ProcDataResponse{}
 	for id := range procs {
 		proc := procs[id]
-		procData := &ProcDataResponse {
-			Name: proc.Identifier(),
-			Pid: proc.GetPid(),
-			Status: proc.GetStatus(),
+		procData := &ProcDataResponse{
+			Name:      proc.Identifier(),
+			Pid:       proc.GetPid(),
+			Status:    proc.GetStatus(),
 			KeepAlive: proc.ShouldKeepAlive(),
 		}
 		procsResponse = append(procsResponse, procData)
 	}
-	*response = ProcResponse {
+	*response = ProcResponse{
 		Procs: procsResponse,
 	}
 	return nil
